@@ -4,11 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.geshner.basicscodelab.ui.theme.BasicsCodelabTheme
@@ -36,13 +37,13 @@ fun MyApp() {
 }
 
 @Composable
-private fun Greetings(names: List<String> = listOf("World", "Compose")) {
+private fun Greetings(names: List<String> = List(1000) { "$it" }) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-        Column {
-            for (name in names) {
+        LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
+            items(names) { name ->
                 Greeting(name)
             }
         }
@@ -99,8 +100,16 @@ fun OnBoardingScreen(onContinueClicked: () -> Unit) {
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
-fun DefaultPreview() {
+fun OnBoardingPreview() {
     BasicsCodelabTheme {
         OnBoardingScreen {}
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun DefaultPreview() {
+    BasicsCodelabTheme {
+        Greetings()
     }
 }
